@@ -4,23 +4,64 @@ import Form from './components/Form';
 import Weather from './components/Weather';
 
 
-const API_KEY="258f676fe5562b81b89c1860cc13eeaf";
+const API_KEY="a1d5dd29b06c7cbaf7523098e9726acc";
 
 class App extends React.Component{
 
-  getWeather= async() => {
-    const api_call=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=${API_KEY}
-    &untis=metric`);
+  state={
+    temprature:undefined,
+    city:undefined,
+    country:undefined,
+    humidity:undefined,
+    description:undefined,
+    error:undefined
+  };
+
+  getWeather= async(e) => {
+    e.preventDefault();
+    const city=e.target.elements.city.value;
+    const country=e.target.elements.country.value;
+    
+    const api_call=await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}`);
     const data=await api_call.json();
-    console.log(data);
+    
+
+    if (city&&country){
+      this.setState({
+        temprature:data.main.temp,
+        city:data.name,
+        country:data.sys.country,
+        humidity:data.main.humidity,
+        description:data.weather[0].description,
+        error:""
+      });
+    }else{
+      this.setState({
+      temprature:undefined,
+      city:undefined,
+      country:undefined,
+      humidity:undefined,
+      description:undefined,
+      error:"Please enter values"
+    });
     }
     
+    console.log(data);
+    }
+
   render(){
     return(
      <div>
-       <Form />
        <Title />
-       <Weather />  
+       <Form getWeather={this.getWeather}/>
+       <Weather 
+        temprature={this.state.temprature}
+        city={this.state.city}
+        country={this.state.country}
+        humidity={this.state.humidity}
+        description={this.state.description}
+        error={this.state.error}
+       />  
      </div> 
     );
   }
