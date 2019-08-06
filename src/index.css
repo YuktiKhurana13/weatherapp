@@ -5,9 +5,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('./images/weather.jpg');
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.title-container{
+  margin-top:  30px;
+  height: 90vh;
+
+}
+
+.form-container{
+  margin-top:  30px;
+  height: 90vh;
+  
+}
+
+input [type="text"]{
+  margin-right: 50px;
+  margin-bottom: 20px;
+}
+
+.weather{
+  border: 2px black solid;
+  margin-top:30px;
 }
